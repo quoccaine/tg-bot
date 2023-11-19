@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: kronos-tg-bot-config
+data:
+    ADMIN_USER_IDS: "robbie_wasabi"
+    ALLOWED_TELEGRAM_USER_IDS: "*"
+    ENABLE_QUOTING: "true"
+    OPENAI_MODEL: "gpt-4"
+    TEMPERATURE: "1.0"
+    IMAGE_MODEL: "dall-e-3"
+    IMAGE_SIZE: "1024x1024"
+    GROUP_TRIGGER_KEYWORD: "chat"
+    IGNORE_GROUP_TRANSCRIPTIONS: "true"
+    BOT_LANGUAGE: "en"
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: kronos-tg-bot-deployment
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: kronos-tg-bot
+    template:
+        metadata:
+            labels:
+                app: kronos-tg-bot
+        spec:
+            containers:
+                - name: kronos-tg-bot
+                  image: gcr.io/chainlancer-384913/kronos-tg-bot:0.0.1
+                  env:
+                      - name: OPENAI_API_KEY
+                        valueFrom:
+                            secretKeyRef:
+                                name: kronos-tg-bot-secret
+                                key: OPENAI_API_KEY
+                      - name: TELEGRAM_BOT_TOKEN
+                        valueFrom:
+                            secretKeyRef:
+                                name: kronos-tg-bot-secret
+                                key: TELEGRAM_BOT_TOKEN
+                      - name: ADMIN_USER_IDS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: ADMIN_USER_IDS
+                      # Add more environment variables from ConfigMap or Secret as needed

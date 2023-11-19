@@ -2,15 +2,15 @@
     "en": {
         "help_description": "Assistance Manifest.",
         "reset_description": "Erase and Recreate Reality.",
-        "image_description": "Visualize Prompt.",
+        "image_description": "Bend Visual Reality.",
         "tts_description": "Voice Textual Essence.",
         "stats_description": "Reveal Usage Shadows.",
         "resend_description": "Echo Past Whisper.",
-        "chat_description": "Speak.",
+        "chat_description": "Converse.",
         "disallowed": "Forbidden Path.",
         "budget_limit": "Boundary Attained.",
         "help_text": [
-            "Speak, I Listen."
+            "Speak, I'll Listen."
         ],
         "stats_conversation": [
             "Current Temporal Flow",
