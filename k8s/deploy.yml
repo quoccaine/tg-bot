@@ -5,7 +5,9 @@ metadata:
 data:
     ADMIN_USER_IDS: "robbie_wasabi"
     ALLOWED_TELEGRAM_USER_IDS: "*"
+    USER_BUDGET: "5.0"
     ENABLE_QUOTING: "true"
+    # OPENAI_MODEL: "gpt-4"
     OPENAI_MODEL: "gpt-3.5-turbo"
     TEMPERATURE: "1.0"
     IMAGE_MODEL: "dall-e-3"
@@ -13,6 +15,9 @@ data:
     GROUP_TRIGGER_KEYWORD: "chat"
     IGNORE_GROUP_TRANSCRIPTIONS: "true"
     BOT_LANGUAGE: "en"
+    MAX_HISTORY_SIZE: "1"
+    MAX_TOKENS: "1200"
+    TOKEN_PRICE: "0.001"
 
 ---
 apiVersion: apps/v1
@@ -20,7 +25,7 @@ kind: Deployment
 metadata:
     name: kronos-tg-bot-deployment
 spec:
-    replicas: 1
+    replicas: 3
     selector:
         matchLabels:
             app: kronos-tg-bot
@@ -53,6 +58,11 @@ spec:
                             configMapKeyRef:
                                 name: kronos-tg-bot-config
                                 key: ALLOWED_TELEGRAM_USER_IDS
+                      - name: USER_BUDGET
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: USER_BUDGET
                       - name: ENABLE_QUOTING
                         valueFrom:
                             configMapKeyRef:
@@ -93,3 +103,18 @@ spec:
                             configMapKeyRef:
                                 name: kronos-tg-bot-config
                                 key: BOT_LANGUAGE
+                      - name: MAX_HISTORY_SIZE
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: MAX_HISTORY_SIZE
+                      - name: MAX_TOKENS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: MAX_TOKENS
+                      - name: TOKEN_PRICE
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: TOKEN_PRICE
