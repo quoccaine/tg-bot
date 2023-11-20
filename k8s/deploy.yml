@@ -6,7 +6,7 @@ data:
     ADMIN_USER_IDS: "robbie_wasabi"
     ALLOWED_TELEGRAM_USER_IDS: "*"
     ENABLE_QUOTING: "true"
-    OPENAI_MODEL: "gpt-4"
+    OPENAI_MODEL: "gpt-3.5-turbo"
     TEMPERATURE: "1.0"
     IMAGE_MODEL: "dall-e-3"
     IMAGE_SIZE: "1024x1024"
@@ -31,7 +31,7 @@ spec:
         spec:
             containers:
                 - name: kronos-tg-bot
-                  image: gcr.io/chainlancer-384913/kronos-tg-bot:0.0.1
+                  image: gcr.io/chainlancer-384913/kronos-tg-bot:0.0.4
                   env:
                       - name: OPENAI_API_KEY
                         valueFrom:
@@ -48,4 +48,48 @@ spec:
                             configMapKeyRef:
                                 name: kronos-tg-bot-config
                                 key: ADMIN_USER_IDS
-                      # Add more environment variables from ConfigMap or Secret as needed
+                      - name: ALLOWED_TELEGRAM_USER_IDS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: ALLOWED_TELEGRAM_USER_IDS
+                      - name: ENABLE_QUOTING
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: ENABLE_QUOTING
+                      - name: OPENAI_MODEL
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: OPENAI_MODEL
+                      - name: TEMPERATURE
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: TEMPERATURE
+                      - name: IMAGE_MODEL
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: IMAGE_MODEL
+                      - name: IMAGE_SIZE
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: IMAGE_SIZE
+                      - name: GROUP_TRIGGER_KEYWORD
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: GROUP_TRIGGER_KEYWORD
+                      - name: IGNORE_GROUP_TRANSCRIPTIONS
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: IGNORE_GROUP_TRANSCRIPTIONS
+                      - name: BOT_LANGUAGE
+                        valueFrom:
+                            configMapKeyRef:
+                                name: kronos-tg-bot-config
+                                key: BOT_LANGUAGE
